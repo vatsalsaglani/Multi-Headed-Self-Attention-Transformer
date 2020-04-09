@@ -6,7 +6,7 @@ import random, math
 
 from .utilities import mask_
 
-
+torch.manual_seed(5)
     
 class SelfAttentionWide(nn.Module):
 

@@ -1,5 +1,5 @@
-from .GeneratorTrain import fit_generator
-from .Generator import * 
+from .SeqToSeqTrain import *
+from .SeqToSeq import * 
 from .SelfAttentionWide import * 
 from .SelfAttentionNarrow import * 
 from .TransformerBlock import *
