@@ -4,3 +4,4 @@ from .SelfAttentionWide import *
 from .SelfAttentionNarrow import * 
 from .TransformerBlock import *
 from .utilities import *
+from .ClassificationTransformer import *
