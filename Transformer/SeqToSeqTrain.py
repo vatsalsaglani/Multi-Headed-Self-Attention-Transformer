@@ -15,45 +15,9 @@ from .utilities import device_ as d
 
 
 
-
-# def prepare_model(embedding_size, heads, depth, seq_length, num_tokens, num_op_tokens, device, mask = True, wide = False):
-#     model = SequnceToSequence(emb = embedding_size, heads=heads, depth=depth, seq_length=seq_length, num_tokens=num_tokens, num_op_tokens=num_op_tokens, device=device, mask = mask, wide = wide).to(device=device)
-
-#     return model 
-
-
-# def get_optimizer(optim_name: str, model, lr: int, wd: int = None, momentum = None, beta_1 = None, beta_2 = None):
-
-#     assert optim_name in ['Adam', 'SGD'], f"Only two optimizers are available ['Adam', 'SGD']"
-
-#     if optim_name == 'Adam':
-#         if wd:
-#             return optim.Adam(model.parameters(), lr = lr, weight_decay=wd)
-#         if beta_1 and not beta_2:
-#             return 'Enter the upper and lower momentum bounds for Adam optimizer `beta_1`, `beta_2`'
-#         if beta_1 and beta_2:
-#             return optim.Adam(model.parameters(), lr = lr, betas = (beta_1, beta_2))
-#         if beta_1 and beta_2 and wd:
-#             return optim.Adam(model.parameters(), lr = lr, weight_decay = wd, betas = (beta_1, beta_2))
-#         if not wd and not beta_1 and not beta_2:
-#             return optim.Adam(model.parameters(), lr = lr)
-
-#     if optim_name == 'SGD':
-#         if beta_1 or beta_2:
-#             return f'SGD takes momentum not the bounds'
-#         if not wd and not momentum:
-#             return optim.SGD(model.parameters(), lr = lr)
-#         if wd:
-#             return optim.SGD(model.parameters(), lr = lr, weight_decay=wd)
-#         if momentum:
-#             return optim.SGD(model.parameters(), lr = lr, momentum=momentum)
-#         if wd and momentum:
-#             return optim.SGD(model.parameters(), lr = lr, weight_decay=wd, momentum=momentum)
-
-
 class FitSequenceToSequence(object):
 
-    def __init__(optim_name: str,  embedding_size: int, heads: int, depth: int, seq_length: int, num_tokens: int, num_op_tokens: int, device: str, mask = True, wide = False):
+    def __init__(self, optim_name: str,  embedding_size: int, heads: int, depth: int, seq_length: int, num_tokens: int, num_op_tokens: int, device: str, mask = True, wide = False):
 
         self.optim_name = optim_name 
         self.embedding_size = embedding_size
@@ -106,7 +70,7 @@ class FitSequenceToSequence(object):
                 return optim.SGD(self.model.parameters(), lr = lr, weight_decay=wd, momentum=momentum)
 
 
-    def fit(self, epochs, dataloader, lr: int, momentum: int = None, beta_1: int = None, beta_2: int = None, wd: int = None phase = 'training'):
+    def fit(self, epochs, dataloader, lr: int, momentum: int = None, beta_1: int = None, beta_2: int = None, wd: int = None, phase = 'training'):
 
         optimizer = self.get_optimizer(lr = lr, momentum = momentum, beta_1 = beta_1, beta_2 = beta_2, wd = wd)
         

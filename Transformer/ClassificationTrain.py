@@ -17,7 +17,7 @@ from .utilities import device_ as d
 
 class FitClassification(object):
 
-    def __init__(optim_name: str,  embedding_size: int, heads: int, depth: int, seq_length: int, num_tokens: int, num_classes: int, device: str, ff_hidden_mult: int, max_pool = True, dropout = 0.0, mask = True, wide = False):
+    def __init__(self, optim_name: str,  embedding_size: int, heads: int, depth: int, seq_length: int, num_tokens: int, num_classes: int, device: str, ff_hidden_mult: int, max_pool = True, dropout = 0.0, mask = True, wide = False):
 
         self.optim_name = optim_name 
         self.embedding_size = embedding_size
@@ -73,7 +73,7 @@ class FitClassification(object):
                 return optim.SGD(self.model.parameters(), lr = lr, weight_decay=wd, momentum=momentum)
 
 
-    def fit(self, epochs, dataloader, lr: int, momentum: int = None, beta_1: int = None, beta_2: int = None, wd: int = None phase = 'training'):
+    def fit(self, epochs, dataloader, lr: int, momentum: int = None, beta_1: int = None, beta_2: int = None, wd: int = None, phase = 'training'):
 
         optimizer = self.get_optimizer(lr = lr, momentum = momentum, beta_1 = beta_1, beta_2 = beta_2, wd = wd)
         
