@@ -6,3 +6,4 @@ from .TransformerBlock import *
 from .utilities import *
 from .ClassificationTransformer import *
 from .ClassificationTrain import *
+from .GenerationTransformer import *

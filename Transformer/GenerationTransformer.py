@@ -8,18 +8,18 @@ from .utilities import device_ as d
 
 torch.manual_seed(5)
 
-class SequnceToSequence(nn.Module):
+class GenerationTransformer(nn.Module):
     """
-    Transformer for sequence to sequence.
+    Transformer for generating text (character by character).
     """
 
-    def __init__(self, emb, heads, depth, seq_length, num_tokens, num_op_tokens, device, mask = True, wide=False):
+    def __init__(self, emb, heads, depth, seq_length, num_tokens, device, mask = True, wide=False):
         super().__init__()
 
-        self.num_op_tokens = num_op_tokens
         self.device = device
-        self.token_embedding = nn.Embedding(embedding_dim=emb, num_embeddings=num_tokens)
+        self.num_tokens = num_tokens
 
+        self.token_embedding = nn.Embedding(embedding_dim=emb, num_embeddings=num_tokens)
         self.pos_embedding = nn.Embedding(embedding_dim=emb, num_embeddings=seq_length)
 
         tblocks = []
@@ -29,7 +29,7 @@ class SequnceToSequence(nn.Module):
 
         self.tblocks = nn.Sequential(*tblocks)
 
-        self.toprobs = nn.Linear(emb, num_op_tokens)
+        self.toprobs = nn.Linear(emb, num_tokens)
 
     def forward(self, x):
         """
@@ -44,6 +44,6 @@ class SequnceToSequence(nn.Module):
 
         x = self.tblocks(x)
 
-        x = self.toprobs(x.view(b*t, e)).view(b, self.num_op_tokens, t)
+        x = self.toprobs(x.view(b*t, e)).view(b, t, self.num_tokens)
 
         return F.log_softmax(x, dim=2)
